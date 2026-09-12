@@ -60,6 +60,7 @@ export async function POST(req: Request) {
         xpReward: rewards.xp,
         goldReward: rewards.gold,
         isCompleted: false,
+        dueDate: new Date(),
         recurrenceRule,
         reminderTime,
         duration,
