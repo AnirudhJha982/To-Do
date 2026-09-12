@@ -123,7 +123,7 @@ export default async function AchievementsPage() {
                 className={`relative overflow-hidden rounded-2xl border-2 transition-all duration-300 ${
                   achievement.unlocked 
                     ? "bg-[#F8F1E8] border-[#B87868] shadow-[0_4px_20px_-4px_rgba(184,120,104,0.3)] hover:-translate-y-1" 
-                    : "bg-[#E1E7DD]/30 border-transparent grayscale-[0.8] opacity-70"
+                    : "bg-[#E1E7DD]/30 border-white grayscale-[0.8] opacity-70"
                 }`}
               >
                 <div className="p-6 flex flex-col items-center text-center h-full">
