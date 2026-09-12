@@ -49,7 +49,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ message: "Preferences saved" }, { status: 200 });
   } catch (error) {
-    if (error instanceof z.ZodError) return NextResponse.json({ errors: error.errors }, { status: 400 });
+    if (error instanceof z.ZodError) return NextResponse.json({ errors: (error as any).errors }, { status: 400 });
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }

@@ -59,7 +59,7 @@ export async function POST(req: Request) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { message: "Validation error", errors: error.errors },
+        { message: "Validation error", errors: (error as any).errors },
         { status: 400 }
       );
     }
@@ -160,7 +160,7 @@ export async function PATCH(req: Request) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { message: "Validation error", errors: error.errors },
+        { message: "Validation error", errors: (error as any).errors },
         { status: 400 }
       );
     }

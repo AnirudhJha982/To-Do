@@ -214,7 +214,7 @@ export default function Dashboard() {
               <h3 className="text-xl font-serif font-bold text-[#8B7B74]/50 uppercase tracking-widest mb-4">Completed</h3>
               <div className="flex flex-col gap-4 opacity-75">
                 {completedQuests.map(quest => (
-                  <QuestCard key={quest.id} quest={quest} onComplete={() => {}} />
+                  <QuestCard key={quest.id} quest={quest} onComplete={async () => {}} />
                 ))}
               </div>
             </div>

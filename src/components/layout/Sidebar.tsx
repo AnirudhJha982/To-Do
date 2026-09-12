@@ -22,7 +22,7 @@ export function Sidebar() {
     // { name: "History", href: "/history", icon: History },
   ];
 
-  const bottomItems = [
+  const bottomItems: { name: string, href: string, icon: any }[] = [
     // { name: "Settings", href: "/settings", icon: Settings },
   ];
 
