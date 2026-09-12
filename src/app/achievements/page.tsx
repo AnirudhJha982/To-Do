@@ -1,7 +1,6 @@
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Trophy, Star, Shield, Flame, Sword, Sparkles, Target, Zap } from "lucide-react";
-import { AppLayout } from "@/components/layout/AppLayout";
 
 const ACHIEVEMENTS = [
   {
@@ -79,7 +78,7 @@ export default async function AchievementsPage() {
   const progress = Math.round((unlockedCount / ACHIEVEMENTS.length) * 100);
 
   return (
-    <AppLayout>
+    <>
       <div className="max-w-5xl mx-auto p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
         <header className="mb-10 text-center">
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-[#1E1511] mb-4">Hall of Trophies</h1>
@@ -166,6 +165,6 @@ export default async function AchievementsPage() {
           })}
         </div>
       </div>
-    </AppLayout>
+    </>
   );
 }
