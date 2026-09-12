@@ -1,0 +1,172 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  passwordHash  String
+  createdAt     DateTime  @default(now())
+  
+  character     Character?
+  quests        Quest[]
+  history       QuestCompletion[]
+  inventory     InventoryItem[]
+  achievements  UserAchievement[]
+  alarms        Alarm[]
+  notifications Notification[]
+  widgets       WidgetPreference[]
+}
+
+model Character {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  name        String
+  avatar      String
+  
+  level       Int      @default(1)
+  xp          Int      @default(0)
+  gold        Int      @default(0)
+  
+  evolutionStage Int   @default(1)
+  
+  // Attributes
+  strength    Int      @default(1)
+  intellect   Int      @default(1)
+  vitality    Int      @default(1)
+  creativity  Int      @default(1)
+  discipline  Int      @default(1)
+  
+  // Streak
+  currentStreak Int      @default(0)
+  longestStreak Int      @default(0)
+  lastActivity  DateTime?
+}
+
+model Quest {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  title       String
+  description String?
+  category    String   // Fitness, Study, Coding, etc.
+  difficulty  String   // Easy, Medium, Hard, Epic
+  attribute   String   // Strength, Intellect, etc.
+  
+  xpReward    Int      
+  goldReward  Int      
+  
+  createdAt   DateTime @default(now())
+  dueDate     DateTime?
+  isCompleted Boolean  @default(false) 
+  
+  // Recurring & Smart Scheduling
+  recurrenceRule String?
+  reminderTime   String?
+  startDate      DateTime?
+  endDate        DateTime?
+  duration       Int?
+  isActive       Boolean  @default(true)
+  
+  completions QuestCompletion[]
+}
+
+model QuestCompletion {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questId   String
+  quest     Quest    @relation(fields: [questId], references: [id], onDelete: Cascade)
+  
+  xpEarned     Int
+  goldEarned   Int
+  attributeInc String
+  
+  completedAt DateTime @default(now())
+}
+
+model ShopItem {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  type        String   // frame, theme, badge
+  price       Int
+  imageUrl    String
+}
+
+model InventoryItem {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shopItemId  String
+  
+  isEquipped  Boolean  @default(false)
+  acquiredAt  DateTime @default(now())
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  condition   String   
+  xpReward    Int
+  goldReward  Int
+}
+
+model UserAchievement {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievementId String
+  
+  unlockedAt    DateTime @default(now())
+}
+
+model Alarm {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  label       String
+  time        String   // HH:mm format
+  days        String   // JSON array or string of days (e.g. "0,1,2,3,4,5,6")
+  isEnabled   Boolean  @default(true)
+  sound       String   @default("default")
+  snoozeDur   Int      @default(5)
+  
+  createdAt   DateTime @default(now())
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  title       String
+  message     String
+  type        String   // "REMINDER", "MISSED_QUEST", "ACHIEVEMENT", "LEVEL_UP"
+  isRead      Boolean  @default(false)
+  actionUrl   String?  // Optional link
+  
+  createdAt   DateTime @default(now())
+}
+
+model WidgetPreference {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  widgetId    String   // "xp-progress", "today-quests", "upcoming", "attributes"
+  order       Int
+  isVisible   Boolean  @default(true)
+  config      String?  // JSON string for specific widget settings
+}

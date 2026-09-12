@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --color-rpg-bg: #DDE7D2;
+  --color-rpg-primary: #755A56;
+  --color-rpg-dark: #5E4A47;
+  --color-rpg-secondary: #8F7B77;
+  --color-rpg-gold: #E8B83A;
+  --color-rpg-yellow: #C49B2E;
+  --color-rpg-goldbg: #F8F3E7;
+  --color-rpg-success: #16804D;
+  
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  
+  --animate-shimmer: shimmer 2s infinite linear;
+  
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+  }
+}
+
+:root {
+  --background: #DDE7D2;
+  --foreground: #5E4A47;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  background-image: 
+    radial-gradient(circle at 100% 0%, rgba(217, 169, 40, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 0% 100%, rgba(7, 63, 43, 0.03) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(7, 63, 43, 0.05);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(7, 63, 43, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(7, 63, 43, 0.4);
+}
+
+/* RPG utility classes */
+@layer utilities {
+  .rpg-card {
+    @apply bg-[#F8F3E7] border border-[#E3D5A7] shadow-sm shadow-[#755A56]/5 rounded-2xl;
+  }
+  
+  .rpg-card-interactive {
+    @apply bg-[#F8F3E7] border border-[#E3D5A7] shadow-sm shadow-[#755A56]/5 rounded-2xl transition-all duration-300 hover:border-[#E8B83A] hover:shadow-lg hover:shadow-[#755A56]/10 hover:-translate-y-1;
+  }
+
+  .font-serif {
+    font-family: var(--font-serif), serif;
+  }
+}
