@@ -31,6 +31,7 @@ model Character {
   
   name        String
   avatar      String
+  unlockedAvatars String @default("adventurer,scholar")
   
   level       Int      @default(1)
   xp          Int      @default(0)

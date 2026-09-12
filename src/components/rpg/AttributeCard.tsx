@@ -33,12 +33,12 @@ export function AttributeCard({ name, level }: AttributeCardProps) {
           <div className={`p-1.5 rounded-md ${config.bg} ${config.color}`}>
             <Icon className="w-4 h-4" />
           </div>
-          <span className="font-bold text-[#5E4A47] text-sm uppercase tracking-wide">{name}</span>
+          <span className="font-bold text-[#4D3935] text-sm uppercase tracking-wide">{name}</span>
         </div>
-        <span className="font-black text-[#755A56] font-serif text-lg">{level}</span>
+        <span className="font-black text-[#765B57] font-serif text-lg">{level}</span>
       </div>
       
-      <div className="h-2 w-full bg-[#E8B83A]/10 rounded-full overflow-hidden border border-[#E8B83A]/20">
+      <div className="h-2 w-full bg-[#EAB62D]/10 rounded-full overflow-hidden border border-[#EAB62D]/20">
         <motion.div 
           className={`h-full ${config.bar}`}
           initial={{ width: 0 }}

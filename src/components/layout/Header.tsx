@@ -35,13 +35,13 @@ export function Header() {
   if (status === "loading" || !session) return null;
 
   return (
-    <header className="sticky top-0 z-30 bg-[#F8F3E7] border-b border-[#E3D5A7] px-6 py-4">
+    <header className="sticky top-0 z-30 bg-[#F6F1EA] px-8 py-5">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 ml-12 md:ml-0">
         
         {/* Left Side: Greeting */}
         <div>
-          <h2 className="text-sm md:text-base font-bold text-[#5E4A47] tracking-wide uppercase">
-            GOOD MORNING, {session.user?.name?.split(" ")[0] || "PLAYER"} 👋
+          <h2 className="text-base font-bold text-[#1E1511] tracking-wide uppercase flex items-center gap-2">
+            GOOD MORNING, {session.user?.name?.split(" ")[0].toUpperCase() || "ADVENTURER"} <span className="text-xl">👋</span>
           </h2>
         </div>
 
@@ -49,16 +49,16 @@ export function Header() {
         <div className="flex flex-wrap items-center gap-3">
           {stats && (
             <>
-              <div className="flex items-center gap-2 bg-[#F8F3E7] border border-[#E3D5A7] px-3 py-1.5 rounded-full shadow-sm text-sm font-semibold text-[#16804D]">
-                <span className="text-[#E8B83A]">🔥</span>
+              <div className="flex items-center gap-2 bg-[#EAE0D6] px-4 py-1.5 rounded-full text-sm font-semibold text-[#1E1511]">
+                <span className="text-[#A65B33]">🔥</span>
                 <span>{stats.streak} Day Streak</span>
               </div>
-              <div className="flex items-center gap-2 bg-[#F8F3E7] border border-[#E3D5A7] px-3 py-1.5 rounded-full shadow-sm text-sm font-semibold text-[#5E4A47]">
-                <span className="text-[#E8B83A]">💰</span>
+              <div className="flex items-center gap-2 bg-[#EAE0D6] px-4 py-1.5 rounded-full text-sm font-semibold text-[#1E1511]">
+                <span className="text-[#A65B33]">💰</span>
                 <span>{stats.gold} Gold</span>
               </div>
-              <div className="flex items-center gap-2 bg-[#755A56] border border-[#5E4A47] px-3 py-1.5 rounded-full shadow-sm text-sm font-bold text-[#F8F3E7]">
-                <span className="text-[#E8B83A]">⭐</span>
+              <div className="flex items-center gap-2 bg-[#EAE0D6] px-4 py-1.5 rounded-full text-sm font-semibold text-[#1E1511]">
+                <span className="text-[#A65B33]">⭐</span>
                 <span>Level {stats.level}</span>
               </div>
             </>

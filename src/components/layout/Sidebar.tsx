@@ -33,7 +33,7 @@ export function Sidebar() {
       {/* Mobile Hamburger */}
       <button 
         onClick={toggleSidebar}
-        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-[#755A56] text-[#F8F3E7] rounded-lg shadow-lg"
+        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-[#765B57] text-[#E2E4E6] rounded-lg shadow-lg"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -48,20 +48,15 @@ export function Sidebar() {
 
       {/* Sidebar */}
       <aside className={cn(
-        "fixed md:sticky top-0 left-0 h-screen w-64 bg-[#755A56] flex flex-col z-40 transition-transform duration-300 ease-in-out border-r border-[#5E4A47]",
+        "fixed md:sticky top-0 left-0 h-screen w-64 bg-[#DBC8B6] flex flex-col z-40 transition-transform duration-300 ease-in-out border-r border-[#DBC8B6]",
         isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
       )}>
         
         {/* Brand Area */}
-        <div className="p-6 border-b border-[#755A56]/50 flex items-center justify-center">
-          <Link href="/dashboard" onClick={() => setIsOpen(false)} className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-full bg-[#E8B83A] flex items-center justify-center text-[#5E4A47] font-black text-xl shadow-md group-hover:scale-105 transition-transform border-2 border-[#E3D5A7]/30">
-              LR
-            </div>
-            <div className="flex flex-col">
-              <h1 className="text-xl font-serif font-bold text-[#F8F3E7] tracking-widest leading-tight">LIFE RPG</h1>
-              <p className="text-[10px] text-[#E8B83A] uppercase tracking-widest font-bold">Your Journey</p>
-            </div>
+        <div className="p-8 border-b border-[#DBC8B6] flex items-center">
+          <Link href="/dashboard" onClick={() => setIsOpen(false)} className="flex items-center gap-4 group">
+            <img src="/logo.jpg" alt="Journix Logo" className="w-10 h-10 rounded-full object-cover shadow-md group-hover:scale-105 transition-transform" />
+            <h1 className="text-xl font-serif font-bold text-[#1E1511] tracking-wide leading-tight">JOURNIX</h1>
           </Link>
         </div>
 
@@ -77,22 +72,21 @@ export function Sidebar() {
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative",
+                  "flex items-center gap-4 px-6 py-3.5 mx-2 rounded-2xl transition-all duration-200 group relative",
                   isActive 
-                    ? "bg-[#F8F3E7] text-[#5E4A47] shadow-sm shadow-[#000000]/5" 
-                    : "text-[#F8F3E7]/80 hover:bg-[#5E4A47]/50 hover:text-[#F8F3E7]"
+                    ? "bg-[#F6F1EA] text-[#1E1511] shadow-sm font-semibold" 
+                    : "text-[#1E1511] hover:bg-[#F6F1EA]/50 font-medium"
                 )}
               >
-                {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-8 bg-[#E8B83A] rounded-r-md"></div>}
-                <Icon className={cn("w-5 h-5 z-10", isActive ? "text-[#E8B83A]" : "text-[#E8B83A]/70 group-hover:text-[#E8B83A]")} />
-                <span className={cn("font-medium z-10", isActive ? "font-bold" : "")}>{item.name}</span>
+                <Icon className={cn("w-5 h-5", isActive ? "text-[#1E1511]" : "text-[#1E1511]/70 group-hover:text-[#1E1511]")} />
+                <span className="text-[15px]">{item.name}</span>
               </Link>
             );
           })}
         </div>
 
         {/* Bottom Actions */}
-        <div className="p-4 border-t border-[#755A56] space-y-1">
+        <div className="p-4 border-t border-[#DBC8B6] space-y-1">
           {bottomItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -100,20 +94,22 @@ export function Sidebar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl text-[#F8F3E7]/70 hover:bg-[#755A56] hover:text-[#F8F3E7] transition-all"
+                className="flex items-center gap-4 px-6 py-3.5 mx-2 rounded-2xl text-[#1E1511] hover:bg-[#F6F1EA]/50 transition-all font-medium"
               >
-                <Icon className="w-5 h-5 text-[#E8B83A]/70" />
-                <span className="font-medium">{item.name}</span>
+                <Icon className="w-5 h-5 text-[#1E1511]/70" />
+                <span className="text-[15px]">{item.name}</span>
               </Link>
             );
           })}
           
           <button
             onClick={() => signOut({ callbackUrl: '/' })}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[#F8F3E7]/70 hover:bg-rose-900/50 hover:text-rose-200 transition-all"
+            className="w-full flex items-center gap-4 px-6 py-3.5 mx-2 rounded-2xl text-[#1E1511] hover:bg-[#F6F1EA]/50 transition-all font-medium"
           >
-            <LogOut className="w-5 h-5 text-rose-400" />
-            <span className="font-medium">Logout</span>
+            <div className="w-6 h-6 rounded-full bg-[#1E1511] flex items-center justify-center text-[#F6F1EA] text-[10px] font-bold">
+              N
+            </div>
+            <span className="text-[15px]">Logout</span>
           </button>
         </div>
       </aside>

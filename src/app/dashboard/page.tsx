@@ -9,7 +9,7 @@ import { Flame, Coins, Trophy, Plus, Check, Clock, ChevronRight, User } from "lu
 import { getXPProgress } from "@/lib/rpg";
 import { AnimatePresence, motion } from "framer-motion";
 import { SmartQuestCreator } from "@/components/quests/SmartQuestCreator";
-import { CHARACTERS } from "@/lib/characters";
+import { CharacterAvatar } from "@/components/rpg/CharacterAvatar";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -83,7 +83,7 @@ export default function Dashboard() {
   };
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center text-[#8F7B77]">Loading your journey...</div>;
+    return <div className="min-h-screen flex items-center justify-center text-[#8B7B74]">Loading your journey...</div>;
   }
 
   if (!character) return null;
@@ -97,83 +97,86 @@ export default function Dashboard() {
     <div className="max-w-6xl mx-auto flex flex-col gap-8 pb-12">
       
       {/* HERO SECTION */}
-      <section className="rpg-card bg-[#F8F3E7] p-6 md:p-10 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#E8B83A]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#755A56]/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/4"></div>
-        
-        <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+      <section className="bg-[#F6F1EA] p-8 md:p-12 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-12">
+        <div className="flex-1 flex flex-col items-start">
           
-          <div className="flex-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#755A56] text-[#E8B83A] rounded-full text-xs font-bold tracking-widest uppercase mb-4">
-              <Trophy className="w-3 h-3" /> Level {character.level} Adventurer
+          {/* Top Badges */}
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <div className="inline-flex items-center gap-2 bg-[#A65B33] text-white px-4 py-1.5 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase">
+              <Trophy className="w-4 h-4" /> Level {character.level} Adventurer
             </div>
-            
-            <h1 className="text-4xl md:text-5xl font-serif font-black text-[#5E4A47] mb-2 leading-tight">
-              Welcome back, {character.name}! 👋
-            </h1>
-            
-            <p className="text-[#8F7B77]/70 text-lg mb-8">
-              Your real-world actions are shaping your character.
-            </p>
-
-            <div className="max-w-md bg-[#F8F3E7] border border-[#E3D5A7] p-4 rounded-xl shadow-sm mb-6">
-              <div className="flex justify-between text-sm font-bold text-[#5E4A47] mb-2 uppercase">
-                <span>XP Progress</span>
-                <span className="text-[#755A56]">{xpProgress.xpInCurrentLevel} / {xpProgress.xpRequiredForNext} XP</span>
-              </div>
-              <div className="h-3 bg-[#F8F3E7] rounded-full overflow-hidden border border-[#5E4A47]/10">
-                <motion.div 
-                  className="h-full bg-gradient-to-r from-[#E8B83A] to-[#C49B2E]"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${Math.min(100, xpProgress.progressPercentage)}%` }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                />
-              </div>
-            </div>
-
-            <button 
-              onClick={() => setIsCreatorOpen(true)}
-              className="inline-flex items-center gap-2 bg-[#E8B83A] hover:bg-[#C49B2E] text-[#5E4A47] px-6 py-3 rounded-xl font-bold transition-all shadow-md shadow-[#E8B83A]/20 hover:-translate-y-0.5"
-            >
-              Continue Your Quest <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-
-          <div className="w-40 h-40 md:w-56 md:h-56 shrink-0 relative">
-            <div className="absolute inset-0 bg-[#DDE7D2]/50 border-4 border-[#E8B83A]/30 rounded-full animate-pulse shadow-[0_0_20px_#E8B83A33]"></div>
-            <div className="absolute inset-4 bg-[#F8F3E7] border-4 border-[#E8B83A] rounded-full flex items-center justify-center text-7xl md:text-8xl shadow-xl z-10">
-              {CHARACTERS[character.avatar]?.avatarStages[character.evolutionStage || 1] || character.avatar || "👤"}
+            <div className="inline-flex items-center gap-1.5 text-[#A65B33] font-bold text-sm">
+              <Flame className="w-4 h-4" /> Gold streak
             </div>
           </div>
+          
+          {/* Titles */}
+          <h1 className="text-5xl md:text-6xl font-serif font-black text-[#1E1511] leading-[1.1] mb-4">
+            Welcome back,<br />
+            {character.name}! 👋
+          </h1>
+          
+          <p className="text-[#1E1511] font-medium text-lg mb-10">
+            Your real-world actions are shaping your character.
+          </p>
+
+          {/* XP Progress */}
+          <div className="w-full max-w-md bg-white rounded-2xl p-4 shadow-sm mb-6 border border-[#EAE0D6]">
+            <div className="flex justify-between text-xs font-bold text-[#1E1511] mb-3 uppercase tracking-wider">
+              <span>XP Progress</span>
+              <span>{xpProgress.xpInCurrentLevel} / {xpProgress.xpRequiredForNext} XP</span>
+            </div>
+            <div className="h-2.5 bg-[#EAE0D6] rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full bg-[#A65B33]"
+                initial={{ width: 0 }}
+                animate={{ width: `${Math.min(100, xpProgress.progressPercentage)}%` }}
+                transition={{ duration: 1, ease: "easeOut" }}
+              />
+            </div>
+          </div>
+
+          {/* CTA */}
+          <button 
+            onClick={() => setIsCreatorOpen(true)}
+            className="inline-flex items-center gap-2 bg-[#A65B33] hover:bg-[#8F4A24] text-white px-8 py-3.5 rounded-full font-semibold transition-all hover:scale-[1.02]"
+          >
+            Continue Your Quest <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Avatar */}
+        <div className="w-48 h-48 md:w-64 md:h-64 shrink-0 relative flex items-center justify-center bg-[#EAE0D6] rounded-full border-[6px] border-[#A65B33] overflow-hidden shadow-lg">
+          <CharacterAvatar characterId={character.avatar} size="xl" className="z-10 w-full h-full object-cover" />
         </div>
       </section>
 
       {/* STATS ROW */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="rpg-card p-5 text-center flex flex-col items-center justify-center">
-          <div className="text-sm font-bold text-[#8F7B77]/60 uppercase tracking-wider mb-2">Current Level</div>
-          <div className="text-3xl font-serif font-black text-[#5E4A47]">LVL {character.level}</div>
-          <div className="text-xs text-[#755A56] font-semibold mt-2 bg-[#755A56]/10 px-2 py-1 rounded-full">+450 XP this week</div>
+        <div className="rpg-card bg-[#E2E4E6] p-5 text-center flex flex-col items-center justify-center">
+          <div className="text-sm font-bold text-[#8B7B74] uppercase tracking-wider mb-2">Current Level</div>
+          <div className="text-3xl font-serif font-black text-[#4D3935]">LVL {character.level}</div>
+          <div className="text-xs text-[#765B57] font-semibold mt-2 bg-[#765B57]/10 px-2 py-1 rounded-full">+450 XP this week</div>
         </div>
         
-        <div className="rpg-card p-5 text-center flex flex-col items-center justify-center">
-          <div className="text-sm font-bold text-[#8F7B77]/60 uppercase tracking-wider mb-2">Gold Earned</div>
-          <div className="text-3xl font-serif font-black text-[#C49B2E]">{character.gold}</div>
-          <div className="text-xs text-[#E8B83A] font-semibold mt-2 bg-[#E8B83A]/10 px-2 py-1 rounded-full">Available Balance</div>
+        <div className="rpg-card bg-[#D3AA9B] p-5 text-center flex flex-col items-center justify-center border-none">
+          <div className="text-sm font-bold text-[#4D3935]/70 uppercase tracking-wider mb-2">Gold Earned</div>
+          <div className="text-3xl font-serif font-black text-[#4D3935]">{character.gold}</div>
+          <div className="text-xs text-[#4D3935] font-semibold mt-2 bg-[#4D3935]/10 px-2 py-1 rounded-full">Available Balance</div>
         </div>
 
-        <div className="rpg-card p-5 text-center flex flex-col items-center justify-center">
-          <div className="text-sm font-bold text-[#8F7B77]/60 uppercase tracking-wider mb-2">Current Streak</div>
-          <div className="text-3xl font-serif font-black text-[#755A56] flex items-center gap-2">
-            <Flame className="w-6 h-6 text-orange-500" /> {character.currentStreak}
+        <div className="rpg-card bg-[#DDA51C] p-5 text-center flex flex-col items-center justify-center border-none">
+          <div className="text-sm font-bold text-[#4D3935]/70 uppercase tracking-wider mb-2">Current Streak</div>
+          <div className="text-3xl font-serif font-black text-[#765B57] flex items-center gap-2">
+            <Flame className="w-6 h-6 text-[#EAB62D]" /> {character.currentStreak}
           </div>
-          <div className="text-xs text-[#8F7B77]/60 font-medium mt-2">Best: {character.longestStreak} days</div>
+          <div className="text-xs text-[#4D3935]/70 font-medium mt-2">Best: {character.longestStreak} days</div>
         </div>
 
-        <div className="rpg-card p-5 text-center flex flex-col items-center justify-center">
-          <div className="text-sm font-bold text-[#8F7B77]/60 uppercase tracking-wider mb-2">Attribute Power</div>
-          <div className="text-3xl font-serif font-black text-[#5E4A47]">{totalStats}</div>
-          <div className="text-xs text-[#755A56] font-semibold mt-2 bg-[#755A56]/10 px-2 py-1 rounded-full">Total Stats</div>
+        <div className="rpg-card bg-[#DCD3D0] p-5 text-center flex flex-col items-center justify-center border-none">
+          <div className="text-sm font-bold text-[#71856A]/70 uppercase tracking-wider mb-2">Attribute Power</div>
+          <div className="text-3xl font-serif font-black text-[#4D3935]">{totalStats}</div>
+          <div className="text-xs text-[#71856A] font-semibold mt-2 bg-[#71856A]/10 px-2 py-1 rounded-full">Total Stats</div>
         </div>
       </section>
 
@@ -181,14 +184,14 @@ export default function Dashboard() {
         
         {/* MAIN QUESTS AREA */}
         <div className="flex-1 flex flex-col gap-6">
-          <div className="flex items-center justify-between border-b-2 border-[#755A56]/20 pb-4">
+          <div className="flex items-center justify-between border-b-2 border-[#765B57]/20 pb-4">
             <div>
-              <h2 className="text-3xl font-serif font-black text-[#5E4A47]">TODAY'S QUESTS</h2>
-              <p className="text-[#8F7B77]/70 font-medium">Turn your real-world goals into progress.</p>
+              <h2 className="text-3xl font-serif font-black text-[#4D3935]">TODAY'S QUESTS</h2>
+              <p className="text-[#8B7B74]/70 font-medium">Turn your real-world goals into progress.</p>
             </div>
             <button 
               onClick={() => setIsCreatorOpen(true)}
-              className="px-4 py-2 bg-[#755A56] hover:bg-[#755A56] text-[#F8F3E7] rounded-xl font-bold shadow-md transition-all flex items-center gap-2"
+              className="px-4 py-2 bg-[#765B57] hover:bg-[#765B57] text-[#E2E4E6] rounded-xl font-bold shadow-md transition-all flex items-center gap-2"
             >
               <Plus className="w-5 h-5" /> New Quest
             </button>
@@ -196,7 +199,7 @@ export default function Dashboard() {
 
           <div className="flex flex-col gap-4">
             {activeQuests.length === 0 ? (
-              <div className="rpg-card p-12 text-center text-[#8F7B77]/60 font-medium">
+              <div className="rpg-card p-12 text-center text-[#8B7B74]/60 font-medium">
                 No active quests for today. The world awaits!
               </div>
             ) : (
@@ -208,7 +211,7 @@ export default function Dashboard() {
 
           {completedQuests.length > 0 && (
             <div className="mt-8">
-              <h3 className="text-xl font-serif font-bold text-[#8F7B77]/50 uppercase tracking-widest mb-4">Completed</h3>
+              <h3 className="text-xl font-serif font-bold text-[#8B7B74]/50 uppercase tracking-widest mb-4">Completed</h3>
               <div className="flex flex-col gap-4 opacity-75">
                 {completedQuests.map(quest => (
                   <QuestCard key={quest.id} quest={quest} onComplete={() => {}} />
@@ -221,8 +224,8 @@ export default function Dashboard() {
         {/* SIDEBAR ATTRIBUTES */}
         <div className="w-full lg:w-80 flex flex-col gap-6">
           <div className="rpg-card p-6">
-            <h3 className="text-lg font-bold text-[#5E4A47] border-b border-[#E8B83A]/30 pb-3 mb-4 flex items-center gap-2">
-              <User className="w-5 h-5 text-[#E8B83A]" /> YOUR CHARACTER
+            <h3 className="text-lg font-bold text-[#4D3935] border-b border-[#EAB62D]/30 pb-3 mb-4 flex items-center gap-2">
+              <User className="w-5 h-5 text-[#EAB62D]" /> YOUR CHARACTER
             </h3>
             
             <div className="flex flex-col gap-4">
@@ -234,19 +237,19 @@ export default function Dashboard() {
             </div>
           </div>
           
-          <div className="rpg-card p-6 bg-[#755A56] text-white">
-            <h3 className="text-lg font-bold text-[#E8B83A] border-b border-[#755A56] pb-3 mb-4 flex items-center gap-2">
+          <div className="rpg-card p-6 bg-[#765B57] text-white">
+            <h3 className="text-lg font-bold text-[#EAB62D] border-b border-[#765B57] pb-3 mb-4 flex items-center gap-2">
               <Flame className="w-5 h-5" /> CONSISTENCY STREAK
             </h3>
             <div className="text-4xl font-serif font-black mb-2">{character.currentStreak} DAYS</div>
-            <p className="text-[#F8F3E7]/70 text-sm mb-4">"You're building momentum."</p>
+            <p className="text-[#E2E4E6]/70 text-sm mb-4">"You're building momentum."</p>
             
-            <div className="flex justify-between items-center text-xs font-bold text-[#F8F3E7]/50 mb-2">
+            <div className="flex justify-between items-center text-xs font-bold text-[#E2E4E6]/50 mb-2">
               <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
             </div>
             <div className="flex justify-between items-center">
               {[...Array(7)].map((_, i) => (
-                <div key={i} className={`w-3 h-3 rounded-full ${i < Math.min(7, character.currentStreak) ? 'bg-[#E8B83A] shadow-[0_0_8px_#E8B83A]' : 'bg-[#755A56]'}`} />
+                <div key={i} className={`w-3 h-3 rounded-full ${i < Math.min(7, character.currentStreak) ? 'bg-[#EAB62D] shadow-[0_0_8px_#EAB62D]' : 'bg-[#765B57]'}`} />
               ))}
             </div>
           </div>
@@ -261,7 +264,7 @@ export default function Dashboard() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#5E4A47]/80 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#4D3935]/80 backdrop-blur-sm p-4"
             onClick={() => setLevelUpData(null)}
           >
             <motion.div
@@ -270,25 +273,25 @@ export default function Dashboard() {
               exit={{ scale: 0.9, opacity: 0 }}
               className="rpg-card bg-white p-10 text-center max-w-md w-full relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-[#F8F3E7]/50 z-0"></div>
+              <div className="absolute inset-0 bg-[#E2E4E6]/50 z-0"></div>
               
               <div className="relative z-10">
                 <div className="text-6xl mb-6 text-center mx-auto w-full flex justify-center drop-shadow-md">
                   ⭐
                 </div>
-                <h2 className="text-4xl font-serif font-black text-[#755A56] mb-2 tracking-widest">
+                <h2 className="text-4xl font-serif font-black text-[#765B57] mb-2 tracking-widest">
                   LEVEL UP!
                 </h2>
-                <div className="h-px w-24 bg-[#E8B83A] mx-auto mb-6"></div>
+                <div className="h-px w-24 bg-[#EAB62D] mx-auto mb-6"></div>
                 
-                <p className="text-[#8F7B77]/70 font-medium mb-6">Your character is getting stronger.</p>
+                <p className="text-[#8B7B74]/70 font-medium mb-6">Your character is getting stronger.</p>
                 
-                <div className="text-2xl font-bold text-[#5E4A47] mb-8 bg-[#F8F3E7] py-3 rounded-xl border border-[#E8B83A]/30">
-                  Level {levelUpData.oldLevel} <span className="text-[#E8B83A] mx-2">→</span> Level {levelUpData.newLevel}
+                <div className="text-2xl font-bold text-[#4D3935] mb-8 bg-[#E2E4E6] py-3 rounded-xl border border-[#EAB62D]/30">
+                  Level {levelUpData.oldLevel} <span className="text-[#EAB62D] mx-2">→</span> Level {levelUpData.newLevel}
                 </div>
                 
                 <button 
-                  className="w-full py-4 bg-[#755A56] hover:bg-[#5E4A47] text-[#F8F3E7] font-bold rounded-xl transition-all shadow-lg"
+                  className="w-full py-4 bg-[#765B57] hover:bg-[#4D3935] text-[#E2E4E6] font-bold rounded-xl transition-all shadow-lg"
                   onClick={() => setLevelUpData(null)}
                 >
                   Continue Journey
@@ -306,7 +309,7 @@ export default function Dashboard() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#5E4A47]/80 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#4D3935]/80 backdrop-blur-sm p-4"
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
@@ -314,21 +317,21 @@ export default function Dashboard() {
               exit={{ scale: 0.9, y: 20 }}
               className="rpg-card w-full max-w-sm p-8 text-center relative"
             >
-              <h2 className="text-2xl font-serif font-black text-[#755A56] mb-2">QUEST COMPLETE! ✓</h2>
-              <p className="text-[#8F7B77]/80 font-bold mb-6 pb-6 border-b border-[#E8B83A]/30">
+              <h2 className="text-2xl font-serif font-black text-[#765B57] mb-2">QUEST COMPLETE! ✓</h2>
+              <p className="text-[#8B7B74]/80 font-bold mb-6 pb-6 border-b border-[#EAB62D]/30">
                 "{verifyingQuest.title}"
               </p>
               
-              <div className="text-sm font-bold text-[#8F7B77]/50 uppercase tracking-widest mb-4">Rewards</div>
+              <div className="text-sm font-bold text-[#8B7B74]/50 uppercase tracking-widest mb-4">Rewards</div>
               
-              <div className="flex flex-col gap-3 mb-8 text-lg font-bold text-[#5E4A47]">
+              <div className="flex flex-col gap-3 mb-8 text-lg font-bold text-[#4D3935]">
                 <div className="flex justify-between px-4">
-                  <span className="text-[#755A56]">⭐ XP</span>
-                  <span className="text-[#755A56]">+{verifyingQuest.xpReward}</span>
+                  <span className="text-[#765B57]">⭐ XP</span>
+                  <span className="text-[#765B57]">+{verifyingQuest.xpReward}</span>
                 </div>
                 <div className="flex justify-between px-4">
-                  <span className="text-[#C49B2E]">💰 Gold</span>
-                  <span className="text-[#C49B2E]">+{verifyingQuest.goldReward}</span>
+                  <span className="text-[#DDA51C]">💰 Gold</span>
+                  <span className="text-[#DDA51C]">+{verifyingQuest.goldReward}</span>
                 </div>
                 <div className="flex justify-between px-4">
                   <span className="text-emerald-600">🧠 {verifyingQuest.attribute}</span>
@@ -339,13 +342,13 @@ export default function Dashboard() {
               <div className="flex flex-col gap-3">
                 <button 
                   onClick={confirmQuestComplete}
-                  className="w-full flex items-center justify-center gap-2 bg-[#E8B83A] hover:bg-[#C49B2E] text-[#5E4A47] font-bold py-3 rounded-xl transition-all shadow-md"
+                  className="w-full flex items-center justify-center gap-2 bg-[#EAB62D] hover:bg-[#DDA51C] text-[#4D3935] font-bold py-3 rounded-xl transition-all shadow-md"
                 >
                   <Check className="w-5 h-5" /> CLAIM REWARD
                 </button>
                 <button 
                   onClick={() => setVerifyingQuest(null)}
-                  className="w-full flex items-center justify-center gap-2 hover:bg-[#F8F3E7] text-[#8F7B77]/60 font-medium py-2 rounded-xl transition-colors text-sm"
+                  className="w-full flex items-center justify-center gap-2 hover:bg-[#E2E4E6] text-[#8B7B74]/60 font-medium py-2 rounded-xl transition-colors text-sm"
                 >
                   Cancel
                 </button>

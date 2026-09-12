@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-rpg-bg: #DDE7D2;
-  --color-rpg-primary: #755A56;
-  --color-rpg-dark: #5E4A47;
-  --color-rpg-secondary: #8F7B77;
-  --color-rpg-gold: #E8B83A;
-  --color-rpg-yellow: #C49B2E;
-  --color-rpg-goldbg: #F8F3E7;
-  --color-rpg-success: #16804D;
+  --color-rpg-bg: #E1C6C8;
+  --color-rpg-primary: #765B57;
+  --color-rpg-dark: #4D3935;
+  --color-rpg-secondary: #8B7B74;
+  --color-rpg-gold: #EAB62D;
+  --color-rpg-yellow: #DDA51C;
+  --color-rpg-goldbg: #E2E4E6;
+  --color-rpg-success: #71856A;
   
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
@@ -22,8 +22,20 @@
 }
 
 :root {
-  --background: #DDE7D2;
-  --foreground: #5E4A47;
+  --background: #EAE0D6;
+  --header: #F6F1EA;
+  --sidebar: #DBC8B6;
+  --card: #F6F1EA;
+  --surface: #EAE0D6;
+  --heading: #4D3935;
+  --text: #584844;
+  --text-secondary: #8B7B74;
+  --gold: #EAB62D;
+  --gold-hover: #DDA51C;
+  --border: #E8D9A8;
+  --success: #71856A;
+  
+  --foreground: var(--heading);
 }
 
 body {
@@ -53,11 +65,11 @@ body {
 /* RPG utility classes */
 @layer utilities {
   .rpg-card {
-    @apply bg-[#F8F3E7] border border-[#E3D5A7] shadow-sm shadow-[#755A56]/5 rounded-2xl;
+    @apply bg-[#E2E4E6] border border-[#E8D9A8] shadow-sm shadow-[#765B57]/5 rounded-2xl;
   }
   
   .rpg-card-interactive {
-    @apply bg-[#F8F3E7] border border-[#E3D5A7] shadow-sm shadow-[#755A56]/5 rounded-2xl transition-all duration-300 hover:border-[#E8B83A] hover:shadow-lg hover:shadow-[#755A56]/10 hover:-translate-y-1;
+    @apply bg-[#E2E4E6] border border-[#E8D9A8] shadow-sm shadow-[#765B57]/5 rounded-2xl transition-all duration-300 hover:border-[#EAB62D] hover:shadow-lg hover:shadow-[#765B57]/10 hover:-translate-y-1;
   }
 
   .font-serif {

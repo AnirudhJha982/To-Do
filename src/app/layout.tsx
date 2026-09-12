@@ -9,10 +9,10 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif" });
 
 export const metadata: Metadata = {
-  title: "Life RPG | Turn Your Life Into a Game",
-  description: "A gamified personal planner and habit tracker.",
+  title: "JOURNIX | Your Journey, Gamified.",
+  description: "Turn your real world goals into RPG quests and level up your life.",
   manifest: "/manifest.json",
-  themeColor: "#755A56",
+  themeColor: "#765B57",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="font-sans antialiased text-[#5E4A47] min-h-screen">
+      <body className="font-sans antialiased text-[#4D3935] min-h-screen">
         <PandaWelcome />
         <AuthProvider>
           <AppLayout>
