@@ -16,7 +16,7 @@ export function CharacterSelector({ initialCharacterId, onConfirm, existingChara
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const unlockedAvatars = existingCharacter?.unlockedAvatars?.split(",") || ["adventurer", "scholar"];
+  const unlockedAvatars = existingCharacter?.unlockedAvatars?.split(",") || ["new_4"];
   const currentGold = existingCharacter?.gold || 0;
   
   const selectedDef = CHARACTERS.find(c => c.id === selectedId);
