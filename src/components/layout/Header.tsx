@@ -23,8 +23,7 @@ export function Header() {
 
   useEffect(() => {
     if (session?.user) {
-      // In a real app we'd want to fetch this via React Query to keep it in sync,
-      // but for now we'll fetch it once on load
+      // Fetch initial on load
       fetch("/api/character")
         .then(res => res.json())
         .then(data => {
@@ -37,6 +36,21 @@ export function Header() {
           }
         })
         .catch(console.error);
+
+      // Listen for updates from other components
+      const handleUpdate = (e: Event) => {
+        const char = (e as CustomEvent).detail;
+        if (char) {
+          setStats({
+            level: char.level || 1,
+            gold: char.gold || 0,
+            streak: char.currentStreak || 0
+          });
+        }
+      };
+
+      window.addEventListener('character-updated', handleUpdate);
+      return () => window.removeEventListener('character-updated', handleUpdate);
     }
   }, [session]);
 

@@ -30,6 +30,7 @@ export default function Dashboard() {
         }
         const charData = await charRes.json();
         setCharacter(charData.character);
+        window.dispatchEvent(new CustomEvent('character-updated', { detail: charData.character }));
 
         const questsRes = await fetch("/api/quests");
         const questsData = await questsRes.json();
@@ -71,6 +72,7 @@ export default function Dashboard() {
       
       setTimeout(() => {
         setCharacter(data.character);
+        window.dispatchEvent(new CustomEvent('character-updated', { detail: data.character }));
       }, 500);
 
     } catch (error) {
