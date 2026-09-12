@@ -18,8 +18,7 @@ export function Sidebar() {
     // { name: "Progress", href: "/progress", icon: TrendingUp },
     { name: "Achievements", href: "/achievements", icon: Trophy },
     { name: "Rewards", href: "/shop", icon: ShoppingCart },
-    // { name: "Inventory", href: "/inventory", icon: Archive },
-    // { name: "History", href: "/history", icon: History },
+    { name: "History", href: "/history", icon: History },
   ];
 
   const bottomItems: { name: string, href: string, icon: any }[] = [
