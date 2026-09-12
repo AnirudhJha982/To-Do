@@ -11,6 +11,8 @@ type Quest = {
   reminderTime?: string;
   isCompleted: boolean;
   dueDate: string;
+  createdAt: string;
+  recurrenceRule?: string;
 };
 
 export default function CalendarPage() {
