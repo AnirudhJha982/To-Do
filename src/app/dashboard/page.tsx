@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [levelUpData, setLevelUpData] = useState<{ oldLevel: number, newLevel: number } | null>(null);
   const [isCreatorOpen, setIsCreatorOpen] = useState(false);
   const [verifyingQuest, setVerifyingQuest] = useState<any>(null);
+  const [questView, setQuestView] = useState<"TODAY" | "HISTORY">("TODAY");
 
   useEffect(() => {
     async function fetchData() {
@@ -188,7 +189,20 @@ export default function Dashboard() {
         <div className="flex-1 flex flex-col gap-6">
           <div className="flex items-center justify-between border-b-2 border-[#765B57]/20 pb-4">
             <div>
-              <h2 className="text-3xl font-serif font-black text-[#4D3935]">TODAY'S QUESTS</h2>
+              <div className="flex gap-4 mb-2">
+                <button 
+                  onClick={() => setQuestView("TODAY")}
+                  className={`text-2xl md:text-3xl font-serif font-black transition-colors ${questView === "TODAY" ? "text-[#4D3935]" : "text-[#8B7B74]/50 hover:text-[#4D3935]"}`}
+                >
+                  TODAY'S QUESTS
+                </button>
+                <button 
+                  onClick={() => setQuestView("HISTORY")}
+                  className={`text-2xl md:text-3xl font-serif font-black transition-colors ${questView === "HISTORY" ? "text-[#4D3935]" : "text-[#8B7B74]/50 hover:text-[#4D3935]"}`}
+                >
+                  QUEST HISTORY
+                </button>
+              </div>
               <p className="text-[#8B7B74]/70 font-medium">Turn your real-world goals into progress.</p>
             </div>
             <button 
@@ -199,25 +213,43 @@ export default function Dashboard() {
             </button>
           </div>
 
-          <div className="flex flex-col gap-4">
-            {activeQuests.length === 0 ? (
-              <div className="rpg-card p-12 text-center text-[#8B7B74]/60 font-medium">
-                No active quests for today. The world awaits!
+          {questView === "TODAY" ? (
+            <>
+              <div className="flex flex-col gap-4">
+                {activeQuests.length === 0 ? (
+                  <div className="rpg-card p-12 text-center text-[#8B7B74]/60 font-medium">
+                    No active quests for today. The world awaits!
+                  </div>
+                ) : (
+                  activeQuests.map(quest => (
+                    <QuestCard key={quest.id} quest={quest} onComplete={handleQuestComplete} />
+                  ))
+                )}
               </div>
-            ) : (
-              activeQuests.map(quest => (
-                <QuestCard key={quest.id} quest={quest} onComplete={handleQuestComplete} />
-              ))
-            )}
-          </div>
+              
+              {/* Only show recently completed in today view if desired, but we can leave it empty to push people to History tab */}
+            </>
+          ) : (
+            <div className="flex flex-col gap-8">
+              {/* History View: Show both active and completed in sections */}
+              <div>
+                <h3 className="text-xl font-serif font-bold text-[#8B7B74]/50 uppercase tracking-widest mb-4">Not Completed Yet ({activeQuests.length})</h3>
+                <div className="flex flex-col gap-4 opacity-90">
+                  {activeQuests.length === 0 && <p className="text-[#8B7B74]/50 text-sm italic">No pending quests.</p>}
+                  {activeQuests.map(quest => (
+                    <QuestCard key={quest.id} quest={quest} onComplete={handleQuestComplete} />
+                  ))}
+                </div>
+              </div>
 
-          {completedQuests.length > 0 && (
-            <div className="mt-8">
-              <h3 className="text-xl font-serif font-bold text-[#8B7B74]/50 uppercase tracking-widest mb-4">Completed</h3>
-              <div className="flex flex-col gap-4 opacity-75">
-                {completedQuests.map(quest => (
-                  <QuestCard key={quest.id} quest={quest} onComplete={async () => {}} />
-                ))}
+              <div>
+                <h3 className="text-xl font-serif font-bold text-[#8B7B74]/50 uppercase tracking-widest mb-4">Completed ({completedQuests.length})</h3>
+                <div className="flex flex-col gap-4 opacity-75">
+                  {completedQuests.length === 0 && <p className="text-[#8B7B74]/50 text-sm italic">No completed quests yet.</p>}
+                  {completedQuests.map(quest => (
+                    <QuestCard key={quest.id} quest={quest} onComplete={async () => {}} />
+                  ))}
+                </div>
               </div>
             </div>
           )}
