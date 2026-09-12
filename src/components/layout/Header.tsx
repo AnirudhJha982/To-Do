@@ -12,6 +12,14 @@ interface HeaderStats {
 export function Header() {
   const { data: session, status } = useSession();
   const [stats, setStats] = useState<HeaderStats | null>(null);
+  const [greeting, setGreeting] = useState("HELLO");
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    if (hour < 12) setGreeting("GOOD MORNING");
+    else if (hour < 18) setGreeting("GOOD AFTERNOON");
+    else setGreeting("GOOD EVENING");
+  }, []);
 
   useEffect(() => {
     if (session?.user) {
@@ -41,7 +49,7 @@ export function Header() {
         {/* Left Side: Greeting */}
         <div>
           <h2 className="text-base font-bold text-[#1E1511] tracking-wide uppercase flex items-center gap-2">
-            GOOD MORNING, {session.user?.name?.split(" ")[0].toUpperCase() || "ADVENTURER"} <span className="text-xl">👋</span>
+            {greeting}, {session.user?.name?.split(" ")[0].toUpperCase() || "ADVENTURER"} <span className="text-xl">👋</span>
           </h2>
         </div>
 
