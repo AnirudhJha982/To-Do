@@ -69,8 +69,29 @@ export default function CalendarPage() {
           const isToday = isSameDay(d, new Date());
           
           const dayQuests = quests.filter(q => {
-            if (!q.dueDate) return false;
-            return isSameDay(new Date(q.dueDate), d);
+            if (!q.dueDate && !q.recurrenceRule) return false;
+            
+            // Use dueDate or fallback to a current date for legacy quests
+            const questDate = q.dueDate ? new Date(q.dueDate) : new Date();
+            questDate.setHours(0, 0, 0, 0);
+            
+            const currentDay = new Date(d);
+            currentDay.setHours(0, 0, 0, 0);
+
+            // Do not show quests on days before they were created/due
+            if (currentDay < questDate) return false;
+
+            if (q.recurrenceRule === "daily") {
+              return true;
+            } else if (q.recurrenceRule === "weekdays") {
+              const dayOfWeek = currentDay.getDay(); // 0 = Sunday, 6 = Saturday
+              return dayOfWeek !== 0 && dayOfWeek !== 6;
+            } else if (q.recurrenceRule === "weekly") {
+              return currentDay.getDay() === questDate.getDay();
+            }
+            
+            // Default: just once
+            return isSameDay(questDate, currentDay);
           });
 
           return (
