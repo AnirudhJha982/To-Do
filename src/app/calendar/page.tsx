@@ -28,7 +28,7 @@ export default function CalendarPage() {
   }, []);
 
   const startDate = startOfWeek(currentDate);
-  const endDate = endOfWeek(currentDate);
+  const endDate = endOfWeek(addDays(startDate, 7));
 
   const days = [];
   let day = startDate;
@@ -37,8 +37,8 @@ export default function CalendarPage() {
     day = addDays(day, 1);
   }
 
-  const prevWeek = () => setCurrentDate(subDays(currentDate, 7));
-  const nextWeek = () => setCurrentDate(addDays(currentDate, 7));
+  const prevWeek = () => setCurrentDate(subDays(currentDate, 14));
+  const nextWeek = () => setCurrentDate(addDays(currentDate, 14));
 
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-8 pb-12">
