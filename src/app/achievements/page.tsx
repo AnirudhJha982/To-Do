@@ -10,7 +10,7 @@ const ACHIEVEMENTS = [
     icon: Star,
     xpReward: 50,
     goldReward: 100,
-    unlocked: true,
+    unlocked: false,
   },
   {
     id: "2",
@@ -19,7 +19,7 @@ const ACHIEVEMENTS = [
     icon: Sword,
     xpReward: 200,
     goldReward: 300,
-    unlocked: true,
+    unlocked: false,
   },
   {
     id: "3",
@@ -64,7 +64,7 @@ const ACHIEVEMENTS = [
     icon: Zap,
     xpReward: 600,
     goldReward: 400,
-    unlocked: true,
+    unlocked: false,
   },
 ];
 
