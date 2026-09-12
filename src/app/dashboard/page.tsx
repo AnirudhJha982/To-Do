@@ -16,6 +16,7 @@ export default function Dashboard() {
   const [character, setCharacter] = useState<any>(null);
   const [quests, setQuests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [levelUpData, setLevelUpData] = useState<{ oldLevel: number, newLevel: number } | null>(null);
   const [isCreatorOpen, setIsCreatorOpen] = useState(false);
   const [verifyingQuest, setVerifyingQuest] = useState<any>(null);
 
