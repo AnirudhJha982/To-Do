@@ -13,6 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 export default function ProfilePage() {
   const router = useRouter();
   const [character, setCharacter] = useState<any>(null);
+  const [completedQuestsCount, setCompletedQuestsCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [isEditingAvatar, setIsEditingAvatar] = useState(false);
 
@@ -23,6 +24,13 @@ export default function ProfilePage() {
         if (!charRes.ok) throw new Error();
         const charData = await charRes.json();
         setCharacter(charData.character);
+
+        const questsRes = await fetch("/api/quests");
+        if (questsRes.ok) {
+          const questsData = await questsRes.json();
+          const completedCount = questsData.quests?.filter((q: any) => q.isCompleted).length || 0;
+          setCompletedQuestsCount(completedCount);
+        }
       } catch {
         router.push("/create-character");
       } finally {
@@ -121,12 +129,12 @@ export default function ProfilePage() {
               </div>
               <div className="flex flex-col items-center justify-center p-4 bg-[#E2E4E6] rounded-xl border border-[#EAB62D]/30 shadow-sm">
                 <Sword className="w-8 h-8 text-[#765B57] mb-2 drop-shadow-sm" />
-                <div className="text-2xl font-black text-[#4D3935] font-serif">{character.level * 10}</div>
+                <div className="text-2xl font-black text-[#4D3935] font-serif">{completedQuestsCount}</div>
                 <div className="text-[10px] font-bold text-[#8B7B74]/70 uppercase tracking-widest text-center mt-1">Quests Done</div>
               </div>
               <div className="flex flex-col items-center justify-center p-4 bg-[#E2E4E6] rounded-xl border border-[#EAB62D]/30 shadow-sm">
                 <Star className="w-8 h-8 text-[#EAB62D] mb-2 drop-shadow-sm" />
-                <div className="text-2xl font-black text-[#4D3935] font-serif">{Math.floor(character.xp / 100)}</div>
+                <div className="text-2xl font-black text-[#4D3935] font-serif">0</div>
                 <div className="text-[10px] font-bold text-[#8B7B74]/70 uppercase tracking-widest text-center mt-1">Achievements</div>
               </div>
             </div>
